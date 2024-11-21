@@ -1,0 +1,29 @@
+{
+  "name": "ncip",
+  "version": "1.0.0",
+  "description": "No Cors Image Proxy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/WorkaroundTech/NCIP.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WorkaroundTech/NCIP/issues"
+  },
+  "homepage": "https://github.com/WorkaroundTech/NCIP#readme",
+  "dependencies": {
+    "@netlify/functions": "^2.8.2",
+    "axios": "^1.7.7",
+    "cors": "^2.8.5",
+    "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.9.1"
+  }
+}
