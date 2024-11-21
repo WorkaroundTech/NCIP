@@ -1,12 +1,13 @@
 import cors from 'cors';
 import axios from 'axios';
+import serverless from 'serverless-http';
 import express, { Request, Response } from 'express';
 
 const app = express()
 app.use(cors());
 
 
-app.get('/', cors(), async (req: Request, res: Response): Promise<any> => {
+app.get(cors(), async (req: Request, res: Response): Promise<any> => {
     const sourceUrl = req.query.src as string;
 
     if (!sourceUrl) {
@@ -29,6 +30,6 @@ app.use((req: Request, res: Response): any => {
       path: req.path,
       error: "Not Found",
     });
-  });
+});
 
-export const handler = app;
+module.exports.handler = serverless(app);
