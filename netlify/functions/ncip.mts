@@ -21,8 +21,9 @@ router.get("/", cors(), async (req: Request, res: Response): Promise<any> => {
 
         return res.status(200).json({ url: sourceUrl, dataURL });
     } catch (error) {
-        console.error(error)
-        return res.status(500).json({ error: 'Failed to fetch image', errorCode: error.status, responseData: Buffer.from(error.response.data, 'binary').toString('base64url')});
+        console.error({ error })
+        const status = error.response?.status || error.status || 500;
+        return res.status(status).json({ error: 'Failed to fetch image', status, responseData: error.response.data });
     }
 });
 
