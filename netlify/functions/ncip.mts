@@ -15,11 +15,9 @@ router.get("/", cors(), async (req: Request, res: Response): Promise<any> => {
     }
 
     try {
-        const response = await axios.get(sourceUrl, { responseType: 'arraybuffer' });
-        const base64Image = Buffer.from(response.data, 'binary').toString('base64');
-        const dataURL = `data:${response.headers['content-type']};base64,${base64Image}`;
-
-        return res.status(200).json({ url: sourceUrl, dataURL });
+        const response = await axios.get(sourceUrl);
+        res.header('Content-Type', response.headers['content-type']);
+        return res.status(200).send(response.data)
     } catch (error) {
         console.error({ error })
         const status = error.response?.status || error.status || 500;
