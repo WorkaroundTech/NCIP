@@ -6,6 +6,10 @@ exports.handler = async function (event, context) {
     if (!src) {
         return {
             statusCode: 400,
+            headers: {
+                'Access-Control-Allow-Origin': '*', // Allow requests from any origin
+                'Access-Control-Allow-Headers': 'Content-Type',
+            },
             body: 'Missing "src" query parameter',
         };
     }
@@ -15,10 +19,13 @@ exports.handler = async function (event, context) {
             responseType: 'arraybuffer', // Ensure binary data is handled correctly
         });
 
-        const headers = Object.assign({ "access-control-allow-origin": "*" }, response.headers)
         return {
             statusCode: response.status,
-            headers,
+            headers: {
+                ...response.headers,
+                'Access-Control-Allow-Origin': '*', // Allow requests from any origin
+                'Access-Control-Allow-Headers': 'Content-Type',
+            },
             body: response.data.toString('base64'),
             isBase64Encoded: true, // Necessary for binary content
         };
@@ -26,11 +33,19 @@ exports.handler = async function (event, context) {
         if (error.response) {
             return {
                 statusCode: error.response.status,
+                headers: {
+                    'Access-Control-Allow-Origin': '*', // Allow requests from any origin
+                    'Access-Control-Allow-Headers': 'Content-Type',
+                },
                 body: error.response.data.toString('utf-8'),
             };
         } else {
             return {
                 statusCode: 500,
+                headers: {
+                    'Access-Control-Allow-Origin': '*', // Allow requests from any origin
+                    'Access-Control-Allow-Headers': 'Content-Type',
+                },
                 body: 'Error fetching the URL',
             };
         }
