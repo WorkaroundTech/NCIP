@@ -15,9 +15,10 @@ exports.handler = async function (event, context) {
             responseType: 'arraybuffer', // Ensure binary data is handled correctly
         });
 
+        const headers = Object.assign({ "access-control-allow-origin": "*" }, response.headers)
         return {
             statusCode: response.status,
-            headers: response.headers,
+            headers,
             body: response.data.toString('base64'),
             isBase64Encoded: true, // Necessary for binary content
         };
