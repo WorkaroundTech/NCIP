@@ -26,10 +26,11 @@ router.get("/", cors(), async (req: Request, res: Response): Promise<any> => {
 
         console.log("response status: ", response.status);
         console.log("response headers: ", response.headers);
-        console.log("response data: ", response.data.toString().substring(0, 100));
 
         // Send the exact response data
-        res.status(response.status).send(response.data);
+        // send
+        res.status(response.status).write(response.data);
+        res.end()
     } catch (error) {
         console.error({ error })
         const status = error.response?.status || error.status || 500;
@@ -47,3 +48,4 @@ app.use((req: Request, res: Response): any => {
 });
 
 export const handler = serverless(app);
+export const app = app
