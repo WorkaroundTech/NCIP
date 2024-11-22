@@ -23,7 +23,7 @@ router.get("/", cors(), async (req: Request, res: Response): Promise<any> => {
     } catch (error) {
         console.error({ error })
         const status = error.response?.status || error.status || 500;
-        return res.status(status).json({ error: 'Failed to fetch image', status, responseData: error.response.data });
+        return res.status(status).json({ error: 'Failed to fetch image', status, responseData: error?.response?.data?.toString() });
     }
 });
 
