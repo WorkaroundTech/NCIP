@@ -16,11 +16,12 @@ router.get("/", cors(), async (req: Request, res: Response): Promise<any> => {
 
     try {
         const response = await axios.get(sourceUrl);
-        res.writeHead(200, { 
+        return res.writeHead(200, { 
             'Content-Type': response.headers['content-type'],
             'Content-length': response.headers['content-length']
-        });
-        return res.end(response.data, 'binary')
+        })
+        .status(200)
+        .send(Buffer.from(response.data, 'binary'))
     } catch (error) {
         console.error({ error })
         const status = error.response?.status || error.status || 500;
