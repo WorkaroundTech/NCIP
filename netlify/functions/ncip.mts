@@ -48,4 +48,3 @@ app.use((req: Request, res: Response): any => {
 });
 
 export const handler = serverless(app);
-export const app = app
