@@ -18,11 +18,13 @@ router.get("/", cors(), async (req: Request, res: Response): Promise<any> => {
         const response = await axios.get(sourceUrl);
         console.log("response headers: ", response.headers);
         console.log("response data: ", { data: response.data.toString().substring(0, 100) });
-        return res.writeHead(200, { 
-            'Content-Type': response.headers['content-type'],
-            'Content-Length': response.headers['content-length']
+        const contentType = response.headers['Content-Type']?.toString() || 'application/octet-stream';
+        const contentLength = response.headers['Content-Length']?.toString() || '0';
+        res.set({
+            "Content-Type": contentType,
+            "Content-Length": contentLength
         })
-        .status(200)
+        .status(response.status)
         .send(response.data)
     } catch (error) {
         console.error({ error })
