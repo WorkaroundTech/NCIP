@@ -9,7 +9,7 @@ const router = Router();
 
 router.get("/", cors(), async (req: Request, res: Response): Promise<any> => {
     const sourceUrl = req.query?.src as string;
-    console.log("trying to fetch image from: ", { sourceUrl });
+    console.log("trying to fetch data from: ", { sourceUrl });
     if (!sourceUrl) {
         return res.status(400).json({ error: 'Missing source query parameter' });
     }
@@ -24,12 +24,16 @@ router.get("/", cors(), async (req: Request, res: Response): Promise<any> => {
             res.setHeader(key, value);
         });
 
+        console.log("response status: ", response.status);
+        console.log("response headers: ", response.headers);
+        console.log("response data: ", response.data.toString().substring(0, 100));
+
         // Send the exact response data
         res.status(response.status).send(response.data);
     } catch (error) {
         console.error({ error })
         const status = error.response?.status || error.status || 500;
-        return res.status(status).json({ error: 'Failed to fetch image', status, responseData: error?.response?.data?.toString() });
+        return res.status(status).json({ error: 'Failed to fetch data', status, responseData: error?.response?.data?.toString() });
     }
 });
 
