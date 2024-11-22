@@ -15,17 +15,17 @@ router.get("/", cors(), async (req: Request, res: Response): Promise<any> => {
     }
 
     try {
-        const response = await axios.get(sourceUrl);
-        console.log("response headers: ", response.headers);
-        console.log("response data: ", { data: response.data.toString().substring(0, 100) });
-        const contentType = response.headers['content-type']?.toString() || 'application/octet-stream';
-        const contentLength = response.headers['content-length']?.toString() || '0';
-        res.set({
-            "Content-Type": contentType,
-            "Content-Length": contentLength
-        })
-        .status(response.status)
-        .send(response.data)
+        const response = await axios.get(sourceUrl, {
+            responseType: 'arraybuffer', // Ensures binary data (e.g., images) is handled correctly.
+        });
+
+        // Set headers from the proxied response
+        Object.entries(response.headers).forEach(([key, value]) => {
+            res.setHeader(key, value);
+        });
+
+        // Send the exact response data
+        res.status(response.status).send(response.data);
     } catch (error) {
         console.error({ error })
         const status = error.response?.status || error.status || 500;
