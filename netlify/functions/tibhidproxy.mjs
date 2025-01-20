@@ -23,6 +23,10 @@ exports.handler = async function (event, context) {
             method: event.httpMethod,
             url: src,
             data: event.body,
+            headers: {
+                ...event.headers,
+                'Host': new URL(src).host, // Ensure the host header is correct
+            }
         });
 
         return {
