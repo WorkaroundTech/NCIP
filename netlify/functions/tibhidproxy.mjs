@@ -32,7 +32,7 @@ exports.handler = async function (event, context) {
                 'Access-Control-Allow-Origin': '*', // Allow requests from any origin
                 'Access-Control-Allow-Headers': 'Content-Type',
             },
-            body: response.data
+            body: JSON.stringify(response.data)
         };
     } catch (error) {
         if (error.response) {
