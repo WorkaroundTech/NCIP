@@ -19,7 +19,7 @@
   "homepage": "https://github.com/WorkaroundTech/NCIP#readme",
   "dependencies": {
     "@netlify/functions": "^2.8.2",
-    "axios": "^1.7.7"
+    "axios": "^1.12.0"
   },
   "devDependencies": {
     "@types/node": "^22.9.1"
